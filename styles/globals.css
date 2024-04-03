@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+     :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient( to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
+
+.containerCard {
+    background-color: red;
+    padding: 1em;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card {
+    width: 300px;
+    height: 455px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 36px;
+    perspective: 2500px;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wrapper {
+    transition: all 0.5s;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    background: #000;
+    border-radius: 30px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.wrapper img {
+    border-radius: 30px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card:hover .wrapper {
+    transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+    box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+}
+
+.wrapper::before,
+.wrapper::after {
+    content: "";
+    opacity: 0;
+    width: 100%;
+    height: 80px;
+    transition: all 0.5s;
+    border-radius: 30px;
+    position: absolute;
+    left: 0;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.wrapper::before {
+    top: 0;
+    height: 100%;
+    background-image: linear-gradient(to top, transparent 46%, rgba(12, 13, 19, 0.5) 68%, rgba(12, 13, 19) 97%);
+}
+
+.wrapper::after {
+    bottom: 0;
+    opacity: 1;
+    background-image: linear-gradient(to bottom, transparent 46%, rgba(12, 13, 19, 0.5) 68%, rgba(12, 13, 19) 97%);
+}
+
+.card:hover .wrapper::before,
+.wrapper::after {
+    opacity: 1;
+}
+
+.card:hover .wrapper::after {
+    height: 120px;
+}
+
+.logo,
+.character {
+    width: 100%;
+    transition: transform 0.5s;
+    position: absolute;
+}
+
+.logo {
+    bottom: 10px;
+}
+
+.card:hover .logo {
+    transform: translate3d(0%, -50px, 100px);
+}
+
+.card:hover .cover-image {
+    opacity: 0.3;
+}
+
+.character {
+    opacity: 0;
+    filter: drop-shadow(2px 2px 2px #000);
+    z-index: -1;
+}
+
+.card:hover .character {
+    opacity: 1;
+    transform: translate3d(5%, -20%, 670px);
+}
