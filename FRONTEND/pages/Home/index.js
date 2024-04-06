@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Tap from "../component/tap";
+import ListItems from "../component/ListItems";
 
 function Home() {
   const [openModal, setOpenModal] = useState(false); // Initialize openModal as a boolean
@@ -18,66 +19,96 @@ function Home() {
 
   const list = [
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Apple",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 1
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
+      title: "Banana",
+      img: "https://via.placeholder.com/150",
+      price: "$1.50",
+      rating: 3.5,
+      category: "Fruit",
+      inventoryStatus: "LOWSTOCK",
+      id: 2
+    },
+    {
+      title: "Strawberry",
+      img: "https://via.placeholder.com/150",
       price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 3
     },
     {
       title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      img: "https://via.placeholder.com/150",
+      price: "$2.00",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "OUTOFSTOCK",
+      id: 4
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Grape",
+      img: "https://via.placeholder.com/150",
+      price: "$4.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 5
     },
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Watermelon",
+      img: "https://via.placeholder.com/150",
+      price: "$5.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 6
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Pineapple",
+      img: "https://via.placeholder.com/150",
+      price: "$3.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 7
     },
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Kiwi",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 8
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Peach",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 3.5,
+      category: "Fruit",
+      inventoryStatus: "LOWSTOCK",
+      id: 9
     },
-  ];
+    {
+      title: "Mango",
+      img: "https://via.placeholder.com/150",
+      price: "$3.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 10
+    }
+  ];  
 
   return (
     <div className="xl:h-screen lg:h-screen md:h-screen sm:h-screen grid xl:grid-rows-8 lg:grid-rows-8 md:grid-rows-8 sm:grid-rows-8 bg-white text-black">
@@ -99,30 +130,8 @@ function Home() {
         </div>
       </header>
 
-      <main className="bg-white row-span-6 sm:row-span-6 overflow-y-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-5">
-          {list.map((item, index) => (
-            <div
-              key={index}
-              className="bg-gray-100 p-4 rounded-lg shadow-md cursor-pointer"
-              onClick={() => {
-                openModaled(item.title, item.price);
-              }}
-            >
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-40 object-cover mb-4 rounded-lg"
-              />
-              <h2 className="text-xl font-bold mb-2">{item.title}</h2>
-              <p className="text-gray-700 mb-2">{item.price}</p>
-              <button className="bg-red-300 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-md">
-                Add to Cart
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="bg-gray-100 m-20"> </div>
+      <main className="bg-white row-span-6 sm:row-span-6 items-center overflow-y-auto">
+        <ListItems data={list} openModaled={openModaled} setDataSerect={setDataSerect}/>
       </main>
 
       {/* Footer */}
