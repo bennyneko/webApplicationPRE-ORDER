@@ -19,145 +19,95 @@ function ShoeStore() {
 
   const list = [
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Apple",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 1
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
+      title: "Banana",
+      img: "https://via.placeholder.com/150",
+      price: "$1.50",
+      rating: 3.5,
+      category: "Fruit",
+      inventoryStatus: "LOWSTOCK",
+      id: 2
+    },
+    {
+      title: "Strawberry",
+      img: "https://via.placeholder.com/150",
       price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 3
     },
     {
       title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      img: "https://via.placeholder.com/150",
+      price: "$2.00",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "OUTOFSTOCK",
+      id: 4
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Grape",
+      img: "https://via.placeholder.com/150",
+      price: "$4.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 5
     },
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Watermelon",
+      img: "https://via.placeholder.com/150",
+      price: "$5.00",
+      rating: 4.5,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 6
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Pineapple",
+      img: "https://via.placeholder.com/150",
+      price: "$3.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 7
     },
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
+      title: "Kiwi",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 8
     },
     {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
+      title: "Peach",
+      img: "https://via.placeholder.com/150",
+      price: "$2.50",
+      rating: 3.5,
+      category: "Fruit",
+      inventoryStatus: "LOWSTOCK",
+      id: 9
     },
     {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
-    {
-      title: "Orange",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$5.50",
-    },
-    {
-      title: "Tangerine",
-      img: "https://i.weed.th/ii/9360054bc6a837bf421d3dab2a49bfa6/800x800",
-      price: "$3.00",
-    },
+      title: "Mango",
+      img: "https://via.placeholder.com/150",
+      price: "$3.50",
+      rating: 4,
+      category: "Fruit",
+      inventoryStatus: "INSTOCK",
+      id: 10
+    }
   ];
 
   return (
