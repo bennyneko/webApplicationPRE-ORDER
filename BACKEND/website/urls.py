@@ -20,5 +20,6 @@ from general import views as general_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("ecommerce/", general_views.ecommerce_index_view)
+    path("ecommerce/", general_views.ecommerce_index_view),
+    path("ecommerce/<id>", general_views.ecommerce_index_view)
 ]
