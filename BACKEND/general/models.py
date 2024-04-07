@@ -3,13 +3,16 @@ from django.db import models
 class Product(models.Model):
     sku = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    # type = models.CharField(max_length=50)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
     start_preorder_date = models.DateTimeField()
     end_preorder_date = models.DateTimeField()
     status = models.BooleanField()
+    def __str__(self):
+        return self.name + '_' + str(self.quantity)
     
 class Customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
