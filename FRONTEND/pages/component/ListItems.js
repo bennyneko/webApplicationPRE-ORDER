@@ -10,8 +10,6 @@ export default function ListItem(props) {
     const [products, setProducts] = useState(data);
     const [layout, setLayout] = useState("grid");
   
-    console.table(products);
-  
     const getSeverity = (product) => {
       switch (product.inventoryStatus) {
         case "INSTOCK":
