@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Tap from "../component/tap";
+import Tap from "../../component/tap";
 import Link from 'next/link'; 
 
 function ShoeStore() {
