@@ -123,7 +123,6 @@ const HeaderPage = (props) => {
     }
   };
   
-
   return (
     <motion.div
       style={stylesHeaderPage.header}
