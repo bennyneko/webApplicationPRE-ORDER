@@ -7,8 +7,7 @@ import { classNames } from "primereact/utils";
 
 export default function ListItem(props) {
     const { data, openModaled } = props;
-    const [products, setProducts] = useState(data);
-    const [layout, setLayout] = useState("grid");
+    const [products, setProducts] = useState([]);
   
     const getSeverity = (product) => {
       switch (product.inventoryStatus) {

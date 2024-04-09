@@ -114,7 +114,15 @@ const HeaderPage = (props) => {
       overflow: "hidden",
       cursor: "pointer",
     },
+    username: {
+      backgroundColor: 'white',
+      margin: '10px',
+      width: '60px',
+      height: '60px',
+      borderRadius: '50%' 
+    }
   };
+  
 
   return (
     <motion.div
@@ -136,7 +144,7 @@ const HeaderPage = (props) => {
       >
         PREORDER
       </motion.h1>
-      <div>Profile</div>
+      <div style={stylesHeaderPage.username}>.</div>
     </motion.div>
   );
 };
@@ -305,7 +313,7 @@ const HomePage = () => {
                   </div>
                 </div>
               )}
-              <div className=" pb-9 text-black">
+              <div className="text-black">
                 <ListItem data={list} openModaled={openModal} />
               </div>
             </div>
