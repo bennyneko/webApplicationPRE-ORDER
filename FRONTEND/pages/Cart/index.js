@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -27,6 +27,18 @@ const data2 = [
   },
   {
     id: 2,
+    name: "test",
+    address: "Home",
+    number: "123",
+  },
+  {
+    id: 3,
+    name: "test",
+    address: "Home",
+    number: "123",
+  },
+  {
+    id: 3,
     name: "test",
     address: "Home",
     number: "123",
@@ -77,7 +89,7 @@ const HeaderPage = (props) => {
         whileTap={{ scale: 0.9 }}
       >
         <Link href={"../"}>
-          <label>PREORDER</label>
+          <label>{ props.preorderList ? "PREORDER LIST" : "PREORDER" }</label>
         </Link>
       </motion.h1>
       <div>Profile</div>
@@ -146,9 +158,12 @@ const ListProduct = () => {
               <h1>{product.address}</h1>
               <h1>{product.number}</h1>
             </div>
-            <div className="flex justify-between gap-2 text-black">
-              <div>แก้ไข</div>
-              <div>ลบ</div>
+            <div>
+              <div className="flex justify-between gap-2 text-black">
+                <div>แก้ไข</div>
+                <div>ลบ</div>
+              </div>
+              <input type="checkbox"></input>
             </div>
           </div>
         </div>
@@ -157,11 +172,13 @@ const ListProduct = () => {
   );
 };
 
-export default function Cart(){
+export default function Cart() {
+  const [preorderList, setPreorderList] = useState(false);
+
   const stylesCart = {
     content: {
       display: "grid",
-      gridTemplateColumns: "1.5fr 6fr", // Removed comma between values
+      gridTemplateColumns: "1.5fr 6fr",
       height: "calc(100vh - 80px)",
       backgroundColor: "#FFFFFF",
     },
@@ -171,21 +188,81 @@ export default function Cart(){
     listproduct: {
       padding: "5px",
     },
+    nextButton: {
+      backgroundColor: "#d9d9d9",
+    },
+    preorderList: {
+      height: "calc(100vh - 80px)",
+      backgroundColor: "#FFFFFF",
+      padding: "5px"
+    }
+  };
+
+  const handleTogglePreorderList = () => {
+    setPreorderList(!preorderList);
   };
 
   return (
     <div>
-      <HeaderPage />
-      <div style={stylesCart.content}>
-        {" "}
-        {/* Corrected styesCart to stylesCart */}
-        <div className="overflow-y-auto" style={stylesCart.listaddress}>
-          <ListAddresses />
-        </div>
-        <div className="overflow-y-auto" style={stylesCart.listproduct}>
-          <ListProduct />
-        </div>
-      </div>
+      <HeaderPage preorderList={preorderList}/>
+
+      {!preorderList ? (
+        <>
+          <motion.button 
+            style={stylesCart.nextButton} 
+            className="absolute bottom-5 right-5 p-8 font-bold text-2xl text-black"
+            onClick={handleTogglePreorderList}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            ขั้นตอนต่อไป
+          </motion.button>
+          <motion.div 
+            style={stylesCart.content}
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 14,
+              ease: "easeInOut"
+            }}
+          >
+            <div className="overflow-y-auto" style={stylesCart.listaddress}>
+              <ListAddresses />
+            </div>
+            <div className="overflow-y-auto" style={stylesCart.listproduct}>
+              <ListProduct />
+            </div>
+          </motion.div>
+        </>
+      ) : (
+        <>
+          <motion.button 
+            style={stylesCart.nextButton} 
+            className="absolute bottom-5 right-5 p-8 font-bold text-2xl text-black"
+            onClick={handleTogglePreorderList}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            ยืนยันสินค้า
+          </motion.button>
+          <motion.div 
+            className="overflow-y-auto" 
+            style={stylesCart.preorderList}
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 14,
+              ease: "easeInOut"
+            }}
+          >
+            <ListProduct />
+          </motion.div>
+        </>
+      )}
     </div>
   );
 };
