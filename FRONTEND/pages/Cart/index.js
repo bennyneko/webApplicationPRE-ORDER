@@ -37,6 +37,12 @@ const data2 = [
     address: "Home",
     number: "123",
   },
+  {
+    id: 4,
+    name: "test",
+    address: "Home",
+    number: "123",
+  },
 ];
 
 const HeaderPage = (props) => {
