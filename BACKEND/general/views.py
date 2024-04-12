@@ -7,8 +7,8 @@ from general.models import Product
 def ecommerce_index_view(request, id=None):
     products = Product.objects.all()
 
-    # สร้างลิสต์ของข้อมูลสินค้า
-    products_list = []
+    # สร้าง Dictionary เพื่อเก็บข้อมูลสินค้า
+    products_dict = {}
     for product in products:
         product_data = {
             'sku': str(product.sku),
@@ -21,17 +21,19 @@ def ecommerce_index_view(request, id=None):
             'end_preorder_date': product.end_preorder_date.isoformat(),
             'status': product.status,  # หากมีฟิลด์ type
         }
-        products_list.append(product_data)
+        products_dict[product.sku] = product_data
 
     if request.method == 'GET':
         if id is not None:
             try:
-                number = int(id) - 1
-                product_data = products_list[int(number)]
-                return JsonResponse(product_data, safe=False)
-            except IndexError:
-                return JsonResponse({'error': 'Product not found'}, status=404)
+                product_data = products_dict.get(id)
+                if product_data:
+                    return JsonResponse(product_data)
+                else:
+                    return JsonResponse({'error': 'Product not found'}, status=404)
+            except ValueError:
+                return JsonResponse({'error': 'Invalid product ID'}, status=400)
         else:
-            return JsonResponse(products_list, safe=False)
+            return JsonResponse(products_dict)
     else:
-        return JsonResponse("Hello this is a data source title name product")
+        return JsonResponse({'message': 'This is a data source for product information'})

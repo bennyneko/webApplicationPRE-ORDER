@@ -67,14 +67,14 @@ const HeaderPage = (props) => {
   return (
     <motion.div
       style={stylesHeaderPage.header}
-      initial={{ height: "100vh", opacity: 0 }}
-      animate={{ height: "80px", opacity: 1 }}
-      transition={{
-        type: "spring",
-        stiffness: 120,
-        damping: 20,
-        ease: (t) => t * (1 - t) * (2 * t - 1),
-      }}
+      // initial={{ height: "100vh", opacity: 0 }}
+      // animate={{ height: "80px", opacity: 1 }}
+      // transition={{
+      //   type: "spring",
+      //   stiffness: 120,
+      //   damping: 20,
+      //   ease: (t) => t * (1 - t) * (2 * t - 1),
+      // }}
     >
       <motion.h1
         style={stylesHeaderPage.textLogo}
@@ -197,7 +197,7 @@ export default function Cart() {
   };
 
   return (
-    <div>
+    <div className=" bg-white">
       <HeaderPage preorderList={preorderList}/>
 
       {!preorderList ? (

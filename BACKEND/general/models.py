@@ -20,6 +20,8 @@ class Customer(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     address = models.TextField()
+    def __str__(self):
+        return self.name
 
 class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
