@@ -25,20 +25,20 @@ export default function ListItem(props) {
   }, [data]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white text-black h-screen">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-2 pb-4">
         {products.map((item, index) => (
           <div
             key={index}
-            className="bg-gray-100 p-2 rounded-lg shadow-md cursor-pointer justify-between"
-            onClick={() => openModaled(index)}
+            className=" p-2 rounded-lg shadow-md cursor-pointer justify-between"
+            onClick={() => openModaled(item.id)}
             style={{ display: "flex", flexDirection: "column" }} // Removed unnecessary justification
           >
             <div className="w-full aspect-square overflow-hidden rounded-lg mb-4">
               <img
                 src={item.img}
                 alt={item.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="flex justify-between p-1">
@@ -52,9 +52,6 @@ export default function ListItem(props) {
                   currency: "THB",
                 }).format(item.price)}
               </p>
-              {/* <button className="bg-red-300 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-md self-start">
-                Add to Cart
-              </button> */}
             </div>
           </div>
         ))}

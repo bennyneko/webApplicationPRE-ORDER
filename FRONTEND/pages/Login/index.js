@@ -57,6 +57,10 @@ const Login = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
+        onClick={() => {
+          setLogin(false)
+          setRegister(false)
+        }}
       >
         PREORDER
       </motion.h1>
@@ -85,26 +89,48 @@ const Login = () => {
         </motion.h1>
         {login ? (
             <>
-                <div className="p-3 bg-red-500 absolute">
-                    <h1>LOGIN</h1>
-                    <input 
+                <motion.div 
+                  className="p-8 bg-white absolute w-2/4 drop-shadow-md rounded-md"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}>
+                  <div className="grid grid-rows-3 gap-2">
+                    <h1 className="text-5xl bg-gray-50 pl-2">LOGIN</h1>
+                    <input
+                    className="text-3xl border-2 p-2 rounded-md border-black w-full" 
                     type='text' 
                     placeholder="Username"
                     value={numberLogin}
                     onChange={(e) => setNumberLogin(e.target.value)}
                     onKeyDown={handleKeyDown}
                     ></input>
-                </div>
+                    <div className="flex justify-end">
+                      <button
+                        className="border-2 border-black text-xl px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring focus:border-gray-500"
+                        onKeyDown={handleKeyDown}
+                      >
+                        ENTER
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
             </>
         ):(
             <></>
         )}
         {register ? (
             <>
-                <div className="p-3 bg-red-500 absolute">
-                    <h1>LOGIN</h1>
+                <motion.div 
+                className="p-8 bg-white absolute w-2/4 drop-shadow-md rounded-md"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <div className="grid grid-rows-4 gap-2">
+                    <h1 className="text-5xl bg-gray-50 pl-2">LOGIN</h1>
                     <input 
-                    type='text' 
+                    type='text'
+                    className="text-3xl border-2 p-2 rounded-md border-black w-full"
                     placeholder="Username"
                     value={numberLogin}
                     onChange={(e) => setNumberLogin(e.target.value)}
@@ -112,19 +138,30 @@ const Login = () => {
                     ></input>
                     <input 
                     type='text' 
+                    className="text-3xl border-2 p-2 rounded-md border-black w-full"
                     placeholder="Username"
                     value={numberLogin}
                     onChange={(e) => setNumberLogin(e.target.value)}
                     onKeyDown={handleKeyDown}
                     ></input>
                     <input 
-                    type='text' 
+                    type='text'
+                    className="text-3xl border-2 p-2 rounded-md border-black w-full"
                     placeholder="Username"
                     value={numberLogin}
                     onChange={(e) => setNumberLogin(e.target.value)}
                     onKeyDown={handleKeyDown}
                     ></input>
-                </div>
+                    <div className="flex justify-end">
+                      <button
+                        className="border-2 border-black text-xl px-4 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring focus:border-gray-500"
+                        onKeyDown={handleKeyDown}
+                      >
+                        ENTER
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
             </>
         ):(
             <></>
