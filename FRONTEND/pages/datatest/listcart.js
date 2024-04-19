@@ -1,34 +1,4 @@
 var listcart = [
-    {
-        idProduct: 7,
-        size: 'US 12.5',
-        quantity: 1,
-    },
-    {
-        idProduct: 13,
-        size: 'US 12.5',
-        quantity: 1,
-    },
-    {
-        idProduct: 4,
-        size: 'US 12.5',
-        quantity: 1,
-    },
-    {
-        idProduct: 15,
-        size: 'US 12.5',
-        quantity: 1,
-    },
-    {
-        idProduct: 12,
-        size: 'US 12.5',
-        quantity: 1,
-    },
-    {
-        idProduct: 5,
-        size: 'US 12.5',
-        quantity: 1,
-    }
 ];
 
 function getListCartAll() {

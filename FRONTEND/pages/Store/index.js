@@ -238,7 +238,6 @@ const ShowProduct = (props) => {
       }
       addProductToCart(newProduct)
       console.table(newProduct);
-      console.table(getListCartAll());
       openModal()
     }else{
       alert("โปรดเลือก Size สินค้า")
@@ -247,7 +246,8 @@ const ShowProduct = (props) => {
 
   const BuyOrReview = (props) => {
     const [choice, setChoice] = useState('BUYING');
-  
+    const [dataStork, setDataStork] = useState(props.stork)
+
     const buyings = [
       {
         size: 'S',
@@ -348,17 +348,16 @@ const ShowProduct = (props) => {
           <div className="bg-white p-4 rounded-lg text-black shadow-md">
             <h2 className="text-2xl font-bold mb-4">Buying</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {buyings.map((data, index) => (
+              {dataStork.map((data, index) => (
                 <div
                   key={index}
-                  className={` ${props.sizeSelect === data.size ? 'bg-green-300' : 'bg-gray-100'} p-4 rounded-lg hover:bg-green-200 transition-colors duration-300`}
+                  className={` ${props.sizeSelect === data.size ? 'bg-green-300' : 'bg-gray-100'} p-4 rounded-sm hover:bg-green-200 transition-colors duration-300`}
                   onClick={() => props.setSizeSelect(data.size)}
                 >
                   <p className="text-lg font-medium mb-2">{data.size}</p>
-                  <p className="text-gray-600">{data.quantity}</p>
                 </div>
-              ))}
-            </div>
+              ))} 
+            </div> 
           </div>
         )}
   
@@ -427,11 +426,11 @@ const ShowProduct = (props) => {
                 }).format(productID.price)}
               </span>
             </div>
-            <div className="h-3/5 my-6 overflow-y-auto text-black">
+            <div className="my-6 h-48 overflow-y-auto text-black">
               {productID.description}
             </div>
-            <div className="h-3/5 overflow-y-auto">
-              <BuyOrReview sizeSelect={sizeSelect} setSizeSelect={setSizeSelect}/>
+            <div className="overflow-y-auto">
+              <BuyOrReview sizeSelect={sizeSelect} setSizeSelect={setSizeSelect} stork={productID.stork}/>
             </div>
             <div className="flex gap-2 justify-end">
               <button

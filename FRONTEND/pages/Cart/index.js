@@ -3,22 +3,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { getAllProducts, getProductById } from "../datatest/data";
 import { getListCartAll, addProductToCart } from "../datatest/listcart";
+import { getAddress } from "../datatest/address";
 import Router from "next/router";
-
-var data = [
-  {
-    id: 1,
-    name: "test",
-    address: "Home",
-    number: "123",
-  },
-  {
-    id: 2,
-    name: "test",
-    address: "Home",
-    number: "123",
-  },
-];
 
 const HeaderPage = (props) => {
   const stylesHeaderPage = {
@@ -57,25 +43,56 @@ const HeaderPage = (props) => {
 };
 
 const ListAddresses = () => {
+  const [dataAddresses, setDataAddresses] = useState(getAddress());
+  const [selectAddresses, setSelectAddresses] = useState(
+    dataAddresses[0]?.addresses?.[0] || null
+  );
 
   const stylesListAddresses = {
     box: {
-      height: "150px",
       borderRadius: "5px",
       backgroundColor: "#d9d9d9",
       marginBottom: "10px",
-      padding: "5px",
-      border: "5px solid black",
-      whileHover: ""
+      padding: "10px",
+      border: "2px solid black",
+      color: "black",
+    },
+    boxSelect: {
+      borderRadius: "5px",
+      backgroundColor: "black",
+      marginBottom: "10px",
+      padding: "10px",
+      color: "white",
     },
   };
+
   return (
     <div>
-      {data.map((data, index) => (
-        <div key={index} style={stylesListAddresses.box}>
-          <h1>{data.name}</h1>
-          <p>{data.address}</p>
-          <p>{data.number}</p>
+      {dataAddresses.map((user, index) => (
+        <div key={index}>
+          {user.addresses.map((address, idx) => (
+            <div
+              key={idx}
+              style={
+                selectAddresses === address
+                  ? stylesListAddresses.boxSelect : stylesListAddresses.box
+              }
+              onClick={() => setSelectAddresses(address)}
+            >
+              <p>name: {user.name}</p>
+              <p>email: {user.email}</p>
+              <p>number: {user.number}</p>
+              <p>{address.address_type} {" "} {address.country}</p>
+              <p>
+                {address.address_line_1}{" "}
+                {address.address_line_2}{" "}
+                {address.district}{" "}
+                {address.city}{" "}
+                {address.postal_code}
+              </p>
+              <p>{address.state}</p>
+            </div>
+          ))}
         </div>
       ))}
       <label className=" text-black p-2 text-center"> + เพิ่มที่อยู๋</label>
@@ -83,12 +100,14 @@ const ListAddresses = () => {
   );
 };
 
-const ListProduct = () => {
+const ListProduct = (props) => {
+  const { setSelectProduct, setPriceTotal } = props;
   const [dataProductCart, setDataProductCart] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const loadDataProduct = () => {
-    var dataIndex = getListCartAll(); 
-    var dataProduct = getAllProducts(); 
+    var dataIndex = getListCartAll();
+    var dataProduct = getAllProducts();
 
     const dataProductCart_temp = dataIndex.map((cartItem) => {
       const product = dataProduct.find(
@@ -99,9 +118,9 @@ const ListProduct = () => {
           idProduct: product.id,
           name: product.name,
           price: product.price,
-          size: cartItem.size, // ใช้ cartItem.size จาก dataIndex
+          size: cartItem.size,
           quantity: cartItem.quantity,
-          img: product.img
+          img: product.img,
         };
       } else {
         return null;
@@ -109,16 +128,23 @@ const ListProduct = () => {
     });
 
     setDataProductCart(dataProductCart_temp);
+  };
 
-    // แสดงข้อมูลในรูปแบบตาราง
-    console.table(dataIndex);
-    console.table(dataProductCart_temp);
+  const handleSelectProduct = (product) => {
+    const isSelected = selectedProducts.some((item) => item.idProduct === product.idProduct);
+    if (isSelected) {
+      const updatedProducts = selectedProducts.filter((item) => item.idProduct !== product.idProduct);
+      setSelectedProducts(updatedProducts);
+      setSelectProduct(updatedProducts)
+    } else {
+      setSelectedProducts([...selectedProducts, product]);
+      setSelectProduct([...selectedProducts, product])
+    }
   };
 
   useEffect(() => {
-    // เรียกใช้งานฟังก์ชั่น loadDataProduct เพียงครั้งเมื่อคอมโพเนนต์ถูกโหลดเท่านั้น
     loadDataProduct();
-  }, []); // ลิสต์ของพจน์ที่ว่างไปทำให้ useEffect ทำงานเพียงครั้งเดียวหลังจากที่คอมโพเนนต์ถูกโหลด
+  }, []);
 
   const stylesListProduct = {
     box: {
@@ -128,7 +154,7 @@ const ListProduct = () => {
       marginBottom: "10px",
     },
     picture: {
-      backgroundColor: "#d9d9d9",
+      backgroundColor: "#FFFFFF",
       width: "150px",
       height: "150px",
       display: "flex",
@@ -148,32 +174,130 @@ const ListProduct = () => {
       {dataProductCart.map((product, index) => (
         <div key={index} style={stylesListProduct.box}>
           <div style={stylesListProduct.picture}>
-            <img src={product.img} alt={product.name} className="max-w-full max-h-full" />
+            <img
+              src={product.img}
+              alt={product.name}
+              className="max-w-full max-h-full object-contain"
+            />
           </div>
           <div style={stylesListProduct.areaDetail}>
             <div>
               <h1 className="text-2xl font-bold">{product.name}</h1>
-              <h1> Size {product.size}</h1>
-              <h1>{product.quantity}</h1>
+              <h1>ไซร์: {product.size}</h1>
+              <h1> {product.quantity}</h1>
+              <h1>ราคา: {product.price}</h1>
             </div>
             <div>
-              <div className="flex justify-between gap-2 text-black">
-                <div>แก้ไข</div>
-                <div>ลบ</div>
+              <div className="flex justify-between text-xl gap-2 text-black">
+                <div>Edit</div>
+                <div>Delete</div>
               </div>
-              <input type="checkbox"></input>
+              <input
+                type="checkbox"
+                style={{ width: "24px", height: "24px", padding: "5px" }}
+                onChange={() => handleSelectProduct(product)}
+                checked={selectedProducts.some((item) => item.idProduct === product.idProduct)}
+              />
             </div>
           </div>
         </div>
       ))}
     </div>
   );
-
 };
 
+const ComfirmProduct = (props) => {
+  const {selecProduct, priceTotal} = props
+  const [dataProductCart, setDataProductCart] = useState([]);
+
+  const loadDataProduct = () => {
+    var dataIndex = selecProduct;
+    var dataProduct = getAllProducts();
+
+    const dataProductCart_temp = dataIndex.map((cartItem) => {
+      const product = dataProduct.find(
+        (product) => product.id === cartItem.idProduct
+      );
+      if (product) {
+        return {
+          idProduct: product.id,
+          name: product.name,
+          price: product.price,
+          size: cartItem.size, // ใช้ cartItem.size จาก dataIndex
+          quantity: cartItem.quantity,
+          img: product.img,
+        };
+      } else {
+        return null;
+      }
+    });
+
+    setDataProductCart(dataProductCart_temp);
+  };
+
+  useEffect(() => {
+    loadDataProduct();
+  }, []);
+
+  const stylesListProduct = {
+    box: {
+      height: "150px",
+      display: "grid",
+      gridTemplateColumns: "150px auto",
+      marginBottom: "10px",
+    },
+    picture: {
+      backgroundColor: "#FFFFFF",
+      width: "150px",
+      height: "150px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    areaDetail: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "10px",
+      color: "black",
+    },
+  };
+
+  return (
+    <div>
+      {dataProductCart.map((product, index) => (
+        <div key={index} style={stylesListProduct.box}>
+          <div style={stylesListProduct.picture}>
+            <img
+              src={product.img}
+              alt={product.name}
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+          <div style={stylesListProduct.areaDetail}>
+            <div>
+              <h1 className="text-2xl font-bold">{product.name}</h1>
+              <h1>ไซร์: {product.size}</h1>
+              {/* <h1>จำนวน: {product.quantity}</h1> */}
+              <h1>ราคา: {product.price}</h1>
+            </div>
+            <div>
+              <div className="flex justify-between text-xl gap-2 text-black">
+                <div>Edit</div>
+                <div>Delete</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <label className="text-black text-3xl font-bold flex justify-end px-4">ยอดสุุดทิ {priceTotal}</label>
+    </div>
+  );
+};
 
 export default function Cart() {
   const [preorderList, setPreorderList] = useState(false);
+  const [selecProduct, setSelectProduct] = useState(null);
+  const [priceTotal, setPriceTotal] = useState(0);
 
   const stylesCart = {
     content: {
@@ -188,8 +312,18 @@ export default function Cart() {
     listproduct: {
       padding: "5px",
     },
+    areaButton: {
+      position: "absolute",
+      bottom: "20px",
+      right: "15px",
+    },
     nextButton: {
       backgroundColor: "#d9d9d9",
+      padding: "20px",
+      fontWeight: "bold",
+      fontSize: "24px",
+      color: "black",
+      borderRadius: "50px",
     },
     preorderList: {
       height: "calc(100vh - 80px)",
@@ -200,7 +334,18 @@ export default function Cart() {
 
   const handleTogglePreorderList = () => {
     setPreorderList(!preorderList);
+    // console.table(selecProduct)
   };
+
+  useEffect(() => {
+    // Calculate total price when selected products change
+    if (selecProduct !== null) {
+      const totalPrice = selecProduct.reduce((total, product) => {
+        return total + product.price;
+      }, 0);
+      setPriceTotal(totalPrice);
+    }
+  }, [selecProduct]);
 
   return (
     <div className=" bg-white">
@@ -208,15 +353,16 @@ export default function Cart() {
 
       {!preorderList ? (
         <>
-          <motion.button
-            style={stylesCart.nextButton}
-            className="absolute bottom-5 right-5 p-8 font-bold text-2xl text-black"
-            onClick={handleTogglePreorderList}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            ขั้นตอนต่อไป
-          </motion.button>
+          <div style={stylesCart.areaButton}>
+            <motion.button
+              style={stylesCart.nextButton}
+              onClick={handleTogglePreorderList}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {priceTotal} ขั้นตอนต่อไป
+            </motion.button>
+          </div>
           <motion.div
             style={stylesCart.content}
             initial={{ x: -100, opacity: 0 }}
@@ -232,21 +378,37 @@ export default function Cart() {
               <ListAddresses />
             </div>
             <div className="overflow-y-auto" style={stylesCart.listproduct}>
-              <ListProduct />
+              <ListProduct setSelectProduct={setSelectProduct} priceTotal={setPriceTotal}/>
             </div>
           </motion.div>
         </>
       ) : (
         <>
-          <motion.button
-            style={stylesCart.nextButton}
-            className="absolute bottom-5 right-5 p-8 font-bold text-2xl text-black"
-            onClick={()=>{Router.push('../Store')}}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            ยืนยันสินค้า12
-          </motion.button>
+          <div style={stylesCart.areaButton}>
+            <div className=" grid grid-cols-2 gap-2">
+              <motion.button
+                style={stylesCart.nextButton}
+                onClick={() => {
+                  setPreorderList(!preorderList);
+                }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                ยกเลิก
+              </motion.button>
+              <motion.button
+                style={stylesCart.nextButton}
+                onClick={() => {
+                  Router.push("../Store");
+                }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                ยืนยันสินค้า
+              </motion.button>
+
+            </div>
+          </div>
           <motion.div
             className="overflow-y-auto"
             style={stylesCart.preorderList}
@@ -259,7 +421,7 @@ export default function Cart() {
               ease: "easeInOut",
             }}
           >
-            <ListProduct />
+            <ComfirmProduct selecProduct={selecProduct} priceTotal={priceTotal}/>
           </motion.div>
         </>
       )}
