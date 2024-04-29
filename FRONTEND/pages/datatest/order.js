@@ -1,63 +1,57 @@
 var listorder = [
     {
-        idOrder: 15542356,
+        idOrder: 13,
         user: 'john',
         address: 'Patumthani',
         product: [
             {
-                idProduct: 2,
-                size: "M",
+                sku: 2,
                 quantity: 1,
-                pirece: 390000,
+                pirece: 3715.00,
                 img: 'img'
             },
             {
-                idProduct: 7,
-                size: "M",
+                sku: 7,
                 quantity: 1,
-                pirece: 390000,
+                pirece: 690.00,
                 img: 'img'
             },
             {
-                idProduct: 5,
-                size: "M",
+                sku: 8,
                 quantity: 1,
-                pirece: 390000,
+                pirece: 1360.00,
                 img: 'img'
             }
         ],
-        pirece: 45645645646,
-        date: '13/04/2024',
-        status: 'sending'
+        totalPrice: 5765.00,
+        date: "13/04/2024",
+        status: "sending"
     },
     {
-        idOrder: 15542357,
+        idOrder: 14,
         user: 'JongSog',
         address: 'Patumthani',
         product: [
             {
-                idProduct: 4,
-                size: "M",
+                idProduct: 6,
                 quantity: 1,
-                pirece: 390000,
+                pirece: 7192.89,
                 img: 'img'
             },
             {
-                idProduct: 7,
-                size: "M",
+                idProduct: 10,
                 quantity: 1,
-                pirece: 390000,
+                pirece: 570.00,
                 img: 'img'
             },
             {
                 idProduct: 9,
-                size: "M",
                 quantity: 1,
-                pirece: 390000,
+                pirece: 763.00,
                 img: 'img'
             }
         ],
-        pirece: 45645645646,
+        totalPrice: 8519.89,
         date: '13/04/2024',
         status: 'Finished'
     },

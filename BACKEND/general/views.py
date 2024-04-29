@@ -92,16 +92,13 @@ class ProductDetailAPIView(APIView):
     
 class ProductSearchAPIView(APIView):
     def get(self, request):
-        # รับค่า query parameters จากผู้ใช้งาน
         name = request.query_params.get('name')
         type = request.query_params.get('type')
         min_price = request.query_params.get('min_price')
         max_price = request.query_params.get('max_price')
 
-        # สร้าง query set เริ่มต้น
         products = Product.objects.all()
 
-        # กรองสินค้าตามเงื่อนไขที่ระบุ
         if name:
             products = products.filter(name__icontains=name)
         if type:
