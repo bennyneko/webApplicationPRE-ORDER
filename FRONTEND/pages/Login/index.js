@@ -173,4 +173,17 @@ const Login = () => {
 
 };
 
+const fetchData = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/ecommerce/");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const jsonData = await response.json();
+    setData(jsonData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 export default Login;

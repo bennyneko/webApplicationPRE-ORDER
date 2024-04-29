@@ -5,7 +5,7 @@ from .models import Customer
 from .models import Payment
 from .models import Shipping
 from .models import Order
-from .hashtag import Hashtags
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,11 +15,8 @@ class ProductSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         instance.save()
         return instance
-    def product_detail(request, product_id):
-        product = Product.objects.get(pk=product_id)
-        Hashtags = Hashtags(product.name)
-        product.description += " ".join(Hashtags)
-        return render(request, 'product_detail.html', {'product': product})
+    
+    
 #เบนนี่ทำต่อvvv   
 
 class CustomerSerializer(serializers.ModelSerializer):

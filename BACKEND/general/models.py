@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Product(models.Model):
     sku = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
@@ -11,9 +12,11 @@ class Product(models.Model):
     start_preorder_date = models.DateTimeField()
     end_preorder_date = models.DateTimeField()
     status = models.BooleanField()
+
     def __str__(self):
         return self.name + '_' + str(self.quantity)
-    
+
+
 class Customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
