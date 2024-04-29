@@ -90,7 +90,7 @@ const Login = () => {
         {login ? (
             <>
                 <motion.div 
-                  className="p-8 bg-white absolute w-2/4 drop-shadow-md rounded-md"
+                  className="p-8 bg-white absolute w-2/4 drop-shado-md rounded-md"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}>
