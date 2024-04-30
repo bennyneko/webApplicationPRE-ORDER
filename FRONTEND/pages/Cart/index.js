@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -5,7 +6,6 @@ import { getAllProducts, getProductById } from "../datatest/data";
 import { getListCartAll, addProductToCart } from "../datatest/listcart";
 import { getAddress } from "../datatest/address";
 import Router from "next/router";
-
 
 const HeaderPage = (props) => {
   const stylesHeaderPage = {
@@ -46,7 +46,7 @@ const HeaderPage = (props) => {
 const ListAddresses = () => {
   const [dataAddresses, setDataAddresses] = useState(getAddress());
   const [selectAddresses, setSelectAddresses] = useState(
-    dataAddresses[0]?.addresses?.[0] || null
+    dataAddresses[0]?.addresses?.[0] || null,
   );
 
   const stylesListAddresses = {
@@ -76,20 +76,20 @@ const ListAddresses = () => {
               key={idx}
               style={
                 selectAddresses === address
-                  ? stylesListAddresses.boxSelect : stylesListAddresses.box
+                  ? stylesListAddresses.boxSelect
+                  : stylesListAddresses.box
               }
               onClick={() => setSelectAddresses(address)}
             >
               <p>name: {user.name}</p>
               <p>email: {user.email}</p>
               <p>number: {user.number}</p>
-              <p>{address.address_type} {" "} {address.country}</p>
               <p>
-                {address.address_line_1}{" "}
-                {address.address_line_2}{" "}
-                {address.district}{" "}
-                {address.city}{" "}
-                {address.postal_code}
+                {address.address_type} {address.country}
+              </p>
+              <p>
+                {address.address_line_1} {address.address_line_2}{" "}
+                {address.district} {address.city} {address.postal_code}
               </p>
               <p>{address.state}</p>
             </div>
@@ -112,16 +112,16 @@ const ListProduct = (props) => {
 
     const dataProductCart_temp = dataIndex.map((cartItem) => {
       const product = dataProduct.find(
-        (product) => product.id === cartItem.idProduct
+        (product) => product.sku === cartItem.idProduct,
       );
       if (product) {
         return {
-          idProduct: product.id,
+          idProduct: product.sku,
           name: product.name,
           price: product.price,
           size: cartItem.size,
           quantity: cartItem.quantity,
-          img: product.img,
+          img: product.image,
         };
       } else {
         return null;
@@ -132,14 +132,18 @@ const ListProduct = (props) => {
   };
 
   const handleSelectProduct = (product) => {
-    const isSelected = selectedProducts.some((item) => item.idProduct === product.idProduct);
+    const isSelected = selectedProducts.some(
+      (item) => item.idProduct === product.idProduct,
+    );
     if (isSelected) {
-      const updatedProducts = selectedProducts.filter((item) => item.idProduct !== product.idProduct);
+      const updatedProducts = selectedProducts.filter(
+        (item) => item.idProduct !== product.idProduct,
+      );
       setSelectedProducts(updatedProducts);
-      setSelectProduct(updatedProducts)
+      setSelectProduct(updatedProducts);
     } else {
       setSelectedProducts([...selectedProducts, product]);
-      setSelectProduct([...selectedProducts, product])
+      setSelectProduct([...selectedProducts, product]);
     }
   };
 
@@ -197,7 +201,9 @@ const ListProduct = (props) => {
                 type="checkbox"
                 style={{ width: "24px", height: "24px", padding: "5px" }}
                 onChange={() => handleSelectProduct(product)}
-                checked={selectedProducts.some((item) => item.idProduct === product.idProduct)}
+                checked={selectedProducts.some(
+                  (item) => item.idProduct === product.idProduct,
+                )}
               />
             </div>
           </div>
@@ -208,31 +214,32 @@ const ListProduct = (props) => {
 };
 
 const ComfirmProduct = (props) => {
-  const {selecProduct, priceTotal} = props
+  const { selecProduct, priceTotal } = props;
   const [dataProductCart, setDataProductCart] = useState([]);
 
   const loadDataProduct = () => {
-    var dataIndex = selecProduct;
+    var dataIndex = selecProduct || [];
     var dataProduct = getAllProducts();
 
     const dataProductCart_temp = dataIndex.map((cartItem) => {
       const product = dataProduct.find(
-        (product) => product.id === cartItem.idProduct
+        (product) => product.sku === cartItem.idProduct,
       );
       if (product) {
         return {
-          idProduct: product.id,
+          idProduct: product.sku,
           name: product.name,
           price: product.price,
           size: cartItem.size, // ใช้ cartItem.size จาก dataIndex
           quantity: cartItem.quantity,
-          img: product.img,
+          img: product.image,
         };
       } else {
         return null;
       }
     });
-
+    console.log("This is data product cart");
+    console.log(dataProductCart_temp);
     setDataProductCart(dataProductCart_temp);
   };
 
@@ -290,9 +297,26 @@ const ComfirmProduct = (props) => {
           </div>
         </div>
       ))}
-      <label className="text-black text-3xl font-bold flex justify-end px-4">ยอดสุุดทิ {priceTotal}</label>
+      <label className="text-black text-3xl font-bold flex justify-end px-4">
+        ยอดสุุดทิ {priceTotal}
+      </label>
     </div>
   );
+};
+const loadDataProduct = () => {
+  fetch("/api/cart/view/") // เรียกใช้ REST API endpoint ของ Django backend
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setDataProductCart(data); // ตั้งค่า state เพื่อแสดงข้อมูลสินค้าในตะกร้า
+    })
+    .catch((error) => {
+      console.error("Error fetching cart items:", error);
+    });
 };
 
 export default function Cart() {
@@ -337,12 +361,14 @@ export default function Cart() {
     setPreorderList(!preorderList);
     // console.table(selecProduct)
   };
-
+  // useEffect(() => {
+  //   loadDataProduct(); // เรียกใช้ฟังก์ชัน loadDataProduct เมื่อ component ถูกโหลด
+  // }, []);
   useEffect(() => {
     // Calculate total price when selected products change
     if (selecProduct !== null) {
       const totalPrice = selecProduct.reduce((total, product) => {
-        return total + product.price;
+        return Number(total) + Number(product.price);
       }, 0);
       setPriceTotal(totalPrice);
     }
@@ -379,7 +405,10 @@ export default function Cart() {
               <ListAddresses />
             </div>
             <div className="overflow-y-auto" style={stylesCart.listproduct}>
-              <ListProduct setSelectProduct={setSelectProduct} priceTotal={setPriceTotal}/>
+              <ListProduct
+                setSelectProduct={setSelectProduct}
+                priceTotal={setPriceTotal}
+              />
             </div>
           </motion.div>
         </>
@@ -407,7 +436,6 @@ export default function Cart() {
               >
                 ยืนยันสินค้า
               </motion.button>
-
             </div>
           </div>
           <motion.div
@@ -422,7 +450,10 @@ export default function Cart() {
               ease: "easeInOut",
             }}
           >
-            <ComfirmProduct selecProduct={selecProduct} priceTotal={priceTotal}/>
+            <ComfirmProduct
+              selecProduct={selecProduct}
+              priceTotal={priceTotal}
+            />
           </motion.div>
         </>
       )}
@@ -430,44 +461,22 @@ export default function Cart() {
   );
 }
 
-const loadDataProduct = () => {
-  fetch('/api/cart/view/')  // เรียกใช้ REST API endpoint ของ Django backend
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
-      .then(data => {
-          setDataProductCart(data); // ตั้งค่า state เพื่อแสดงข้อมูลสินค้าในตะกร้า
-      })
-      .catch(error => {
-          console.error('Error fetching cart items:', error);
-      });
-};
-
-useEffect(() => {
-  loadDataProduct(); // เรียกใช้ฟังก์ชัน loadDataProduct เมื่อ component ถูกโหลด
-}, []);
-
 const handleSubmit = () => {
-  fetch('/api/cart/checkout/', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ selectedProducts }), // ส่งข้อมูลที่เลือกไปยัง Django backend
+  fetch("/api/cart/checkout/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ selectedProducts }), // ส่งข้อมูลที่เลือกไปยัง Django backend
   })
-  .then(response => {
+    .then((response) => {
       if (!response.ok) {
-          throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       return response.json();
-  })
-  .then(data => {
-      
-  })
-  .catch(error => {
-      console.error('Error sending selected products:', error);
-  });
+    })
+    .then((data) => {})
+    .catch((error) => {
+      console.error("Error sending selected products:", error);
+    });
 };

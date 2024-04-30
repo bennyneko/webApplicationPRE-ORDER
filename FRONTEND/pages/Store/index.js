@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ListItem from "../component/ListItems";
 import { getAllProducts, getProductById } from "../datatest/data";
-import { getListCartAll, addProductToCart} from "../datatest/listcart";
+import { getListCartAll, addProductToCart } from "../datatest/listcart";
 
 import { MdOutlineTune } from "react-icons/md";
 import { MdOutlineClose } from "react-icons/md";
@@ -143,8 +143,9 @@ const Menu = (props) => {
 };
 
 const Filter = (props) => {
-
-  const dataTppe = [...new Set(getAllProducts().map(product => product.brand))];
+  const dataTppe = [
+    ...new Set(getAllProducts().map((product) => product.brand)),
+  ];
 
   const stylesFilter = {
     body: {
@@ -156,7 +157,7 @@ const Filter = (props) => {
     scrollContainer: {
       height: "300px",
       overflowY: "auto",
-      padding: "10px"
+      padding: "10px",
     },
   };
 
@@ -173,26 +174,33 @@ const Filter = (props) => {
       }}
     >
       <div className="flex justify-end text-black p-3 font-bold cursor-pointer">
-        <MdOutlineClose style={{ fontSize: '32px' }} onClick={props.openFilter}/>
+        <MdOutlineClose
+          style={{ fontSize: "32px" }}
+          onClick={props.openFilter}
+        />
       </div>
       <div className="text-black grid grid-flow-col">
         <div style={stylesFilter.scrollContainer}>
-          <div 
-            className={`p-2 text-xl rounded-full border-4 ${props.dataFilter === "ALL" ? 'border-black' : ''} hover:border-black mb-2`}
+          <div
+            className={`p-2 text-xl rounded-full border-4 ${
+              props.dataFilter === "ALL" ? "border-black" : ""
+            } hover:border-black mb-2`}
             onClick={() => {
-              props.setDataFilter("ALL")
+              props.setDataFilter("ALL");
             }}
-            >
-              ALL
-            </div>
-          {dataTppe.map((data,index)=>(
-            <div 
-            key={index} 
-            className={`p-2 text-xl rounded-full border-4 ${props.dataFilter === data ? 'border-black' : ' '} hover:border-black mb-2`}
-            onClick={() => {
-              console.log(data)
-              props.setDataFilter(data)
-            }}
+          >
+            ALL
+          </div>
+          {dataTppe.map((data, index) => (
+            <div
+              key={index}
+              className={`p-2 text-xl rounded-full border-4 ${
+                props.dataFilter === data ? "border-black" : " "
+              } hover:border-black mb-2`}
+              onClick={() => {
+                console.log(data);
+                props.setDataFilter(data);
+              }}
             >
               {data}
             </div>
@@ -211,157 +219,157 @@ const Filter = (props) => {
             <div key={index} className="p-2 text-xl rounded-full border-4 hover:border-black mb-2">
               {data}
             </div>
-          ))} */}null
+          ))} */}
+          null
         </div>
         <div style={stylesFilter.scrollContainer}>
           {/* {dataTppe.map((data,index)=>(
             <div key={index} className="p-2 text-xl rounded-full border-4 hover:border-black mb-2">
               {data}
             </div>
-          ))} */}null
+          ))} */}
+          null
         </div>
       </div>
     </motion.div>
   );
 };
 
- const ShowProduct = (props) => {
+const ShowProduct = (props) => {
   const { productID, openModal } = props;
-  const [ sizeSelect, setSizeSelect] = useState()
+  const [sizeSelect, setSizeSelect] = useState();
 
   function addProduct() {
-    if (sizeSelect) {
-      var newProduct = 
-      {
-        idProduct: productID.id,
-        size: sizeSelect
-      }
-      addProductToCart(newProduct)
-      console.table(newProduct);
-      openModal()
-    }else{
-      alert("โปรดเลือก Size สินค้า")
-    }
+    // if (sizeSelect) {
+    //   var newProduct = {
+    //     idProduct: productID.id,
+    //     size: sizeSelect,
+    //   };
+    var newProduct = {
+      idProduct: productID.sku,
+    };
+    addProductToCart(newProduct);
+    const data = getListCartAll();
+    console.log("Hello");
+    console.log(productID);
+    console.log(newProduct);
+    console.log(data);
+    openModal();
+    // } else {
+    //   alert("โปรดเลือก Size สินค้า");
+    // }
   }
 
   const BuyOrReview = (props) => {
-    const [choice, setChoice] = useState('BUYING');
-    const [dataStork, setDataStork] = useState(props.stork)
+    const [choice, setChoice] = useState("BUYING");
+    const [dataStork, setDataStork] = useState(props.stork);
 
     const buyings = [
       {
-        size: 'S',
-        quantity: 10
+        size: "S",
+        quantity: 10,
       },
       {
-        size: 'M',
-        quantity: 10
+        size: "M",
+        quantity: 10,
       },
       {
-        size: 'L',
-        quantity: 10
+        size: "L",
+        quantity: 10,
       },
       {
-        size: 'XL',
-        quantity: 10
+        size: "XL",
+        quantity: 10,
       },
-    ]
-  
+    ];
+
     const reviews = [
       {
         id: 1,
-        user: 'John',
-        comments: 'ดี้ดีย์',
+        user: "John",
+        comments: "ดี้ดีย์",
         imgs: [
           {
             id: 1,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
           {
             id: 2,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
         ],
       },
       {
         id: 2,
-        user: 'Bob',
-        comments: 'ดี้ดีย์',
+        user: "Bob",
+        comments: "ดี้ดีย์",
         imgs: [
           {
             id: 1,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
         ],
       },
       {
         id: 3,
-        user: 'MaxQueen',
-        comments: 'ดี้ดีย์',
+        user: "MaxQueen",
+        comments: "ดี้ดีย์",
         imgs: [
           {
             id: 1,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
           {
             id: 1,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
           {
             id: 1,
-            path:"https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg"
+            path: "https://static.thairath.co.th/media/dFQROr7oWzulq5Fa4Vt7gR3MuTUR4dikqCOitAqj1SgiZfpfkpqJFQzY0CDwRre3Yzp.jpg",
           },
         ],
       },
-    ] 
-  
+    ];
+
     const handleChoiceClick = (selectedChoice) => {
       setChoice(selectedChoice);
     };
-  
+
     return (
       <div className="w-full max-w-md mx-auto">
         <div className="grid grid-cols-2 gap-4 mb-2">
           <button
             className={`px-4 py-3 rounded-lg text-lg font-medium transition-colors duration-300 ${
-              choice === 'BUYING'
-                ? 'bg-green-500 text-white hover:bg-green-600'
-                : 'bg-slate-200 text-gray-700 hover:bg-slate-300'
+              choice === "BUYING"
+                ? "bg-green-500 text-white hover:bg-green-600"
+                : "bg-slate-200 text-gray-700 hover:bg-slate-300"
             }`}
-            onClick={() => handleChoiceClick('BUYING')}
+            onClick={() => handleChoiceClick("BUYING")}
           >
             BUYING
           </button>
           <button
             className={`px-4 py-3 rounded-lg text-lg font-medium transition-colors duration-300 ${
-              choice === 'REVIEW'
-                ? 'bg-green-500 text-white hover:bg-green-600'
-                : 'bg-slate-200 text-gray-700 hover:bg-slate-300'
+              choice === "REVIEW"
+                ? "bg-green-500 text-white hover:bg-green-600"
+                : "bg-slate-200 text-gray-700 hover:bg-slate-300"
             }`}
-            onClick={() => handleChoiceClick('REVIEW')}
+            onClick={() => handleChoiceClick("REVIEW")}
           >
             REVIEW
           </button>
         </div>
-  
-        {choice === 'BUYING' && (
+
+        {choice === "BUYING" && (
           <div className="bg-white p-4 rounded-lg text-black shadow-md">
             <h2 className="text-2xl font-bold mb-4">Buying</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {dataStork.map((data, index) => (
-                <div
-                  key={index}
-                  className={` ${props.sizeSelect === data.size ? 'bg-green-300' : 'bg-gray-100'} p-4 rounded-sm hover:bg-green-200 transition-colors duration-300`}
-                  onClick={() => props.setSizeSelect(data.size)}
-                >
-                  <p className="text-lg font-medium mb-2">{data.size}</p>
-                </div>
-              ))} 
-            </div> 
+              BUYING PAGE
+            </div>
           </div>
         )}
-  
-        {choice === 'REVIEW' && (
+
+        {choice === "REVIEW" && (
           <div className="bg-white p-4 rounded-lg text-black shadow-md">
             <h2 className="text-2xl font-bold mb-4">Reviews</h2>
             <div className="space-y-6">
@@ -391,7 +399,6 @@ const Filter = (props) => {
             </div>
           </div>
         )}
-  
       </div>
     );
   };
@@ -399,9 +406,9 @@ const Filter = (props) => {
   const stylesShowProduct = {
     button: {
       backgroundColor: "#d9d9d9",
-      hoverBackgroundColor: "#BB0000"
+      hoverBackgroundColor: "#BB0000",
     },
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50 backdrop-filter backdrop-blur-lg">
@@ -409,7 +416,7 @@ const Filter = (props) => {
         <div className="grid grid-cols-1 md:grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 lg:h-full gap-6 md:gap-8">
           <div className="flex flex-col items-center md:items-center lg:justify-center p-12 mb-32">
             <img
-              src={productID.img}
+              src={productID && productID.image}
               alt="Product"
               className="rounded-lg w-full md:h-auto h-50vh"
             />
@@ -417,20 +424,25 @@ const Filter = (props) => {
           <div className="bg-gray-100 overflow-y-auto p-4">
             <div className="">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black">
-                {productID.name}
+                {productID && productID.name}
               </h1>
               <span className="text-xl md:text-2xl font-semibold text-gray-700">
-                {new Intl.NumberFormat("th-TH", {
-                  style: "currency",
-                  currency: "THB",
-                }).format(productID.price)}
+                {productID &&
+                  new Intl.NumberFormat("th-TH", {
+                    style: "currency",
+                    currency: "THB",
+                  }).format(productID.price)}
               </span>
             </div>
             <div className="my-6 h-48 overflow-y-auto text-black">
-              {productID.description}
+              {productID && productID.description}
             </div>
             <div className="overflow-y-auto">
-              <BuyOrReview sizeSelect={sizeSelect} setSizeSelect={setSizeSelect} stork={productID.stork}/>
+              <BuyOrReview
+                sizeSelect={sizeSelect}
+                setSizeSelect={setSizeSelect}
+                stork={productID && productID.stork}
+              />
             </div>
             <div className="flex gap-2 justify-end">
               <button
@@ -492,31 +504,35 @@ const HomePage = () => {
     },
   };
 
-   const fetchData = async () => {
-     try {
-       const response = await fetch("http://127.0.0.1:8000/ecommerce/");
-       if (!response.ok) {
-         throw new Error("Network response was not ok");
-       }
-       const jsonData = await response.json();
-       setData(jsonData);
-     } catch (error) {
-       console.error("Error fetching data:", error);
-     }
-   };
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/ecommerce/");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const loadProducts = () => {
     if (!dataFilter || dataFilter === "ALL") {
       setData(getAllProducts());
     } else {
-      const filteredData = getAllProducts().filter(product => product.brand === dataFilter);
+      const filteredData = getAllProducts().filter(
+        (product) => product.brand === dataFilter,
+      );
       setData(filteredData);
     }
-  }
+  };
 
   useEffect(() => {
     // fetchData();
     loadProducts();
+    console.log("THIS IS PRODUCT ID");
+    console.log(productID);
   }, [dataFilter]);
 
   return (
@@ -532,12 +548,17 @@ const HomePage = () => {
             <div className="overflow-y-auto">
               {filter ? (
                 <div>
-                  <Filter openFilter={openFilter} dataFilter={dataFilter} setDataFilter={setDataFilter} loadProducts={loadProducts} />
+                  <Filter
+                    openFilter={openFilter}
+                    dataFilter={dataFilter}
+                    setDataFilter={setDataFilter}
+                    loadProducts={loadProducts}
+                  />
                 </div>
               ) : (
                 <div style={stylesHomePage.areaFilter}>
                   <div className="cursor-pointer" onClick={openFilter}>
-                    <MdOutlineTune style={{ fontSize: '32px' }} />
+                    <MdOutlineTune style={{ fontSize: "32px" }} />
                   </div>
                 </div>
               )}

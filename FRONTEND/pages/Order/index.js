@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { color, motion } from "framer-motion";
 import Link from "next/link";
@@ -5,7 +6,6 @@ import { getAllProducts, getProductById } from "../datatest/data";
 import { getListCartAll, addProductToCart } from "../datatest/listcart";
 import { getOrderAll } from "../datatest/order";
 import Router from "next/router";
-import React, { useEffect, useState } from "react";
 
 const HeaderPage = () => {
   const stylesHeaderPage = {
@@ -30,7 +30,7 @@ const HeaderPage = () => {
     <motion.div style={stylesHeaderPage.header}>
       <motion.h1
         style={stylesHeaderPage.textLogo}
-        onClick={() => Router.push('../Store')}
+        onClick={() => Router.push("../Store")}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -99,166 +99,172 @@ const ListOrder = (props) => {
 };
 
 export default function Order() {
-    const [orderList, setOrderList] = useState();
-  
-    const stylesCart = {
-      content: {
-        display: "grid",
-        gridTemplateColumns: "1.5fr 6fr",
-        height: "calc(100vh - 80px)",
-        backgroundColor: "#FFFFFF",
-      },
-      listaddress: {
-        padding: "5px",
-      },
-      listproduct: {
-        padding: "5px",
-      },
-      nextButton: {
-        backgroundColor: "#d9d9d9",
-      },
-      preorderList: {
-        height: "calc(100vh - 80px)",
-        backgroundColor: "#FFFFFF",
-        padding: "5px",
-      },
-      orderList: {
-        color: "black",
-        padding: "20px",
-      },
-      table: {
-        width: "100%",
-        borderCollapse: "collapse",
-        fontFamily: "Arial, sans-serif",
-        marginTop: "16px",
-      },
-      th: {
-        padding: "10px",
-        textAlign: "left",
-        borderBottom: "1px solid #ddd",
-        backgroundColor: "#f2f2f2",
-      },
-      td: {
-        padding: "10px",
-        textAlign: "left",
-        borderBottom: "1px solid #ddd",
-      },
-      evenRow: {
-        backgroundColor: "#f2f2f2",
-      },
-      image: {
-        maxWidth: "50px",
-        height: "auto",
-      },
-      orderDetails: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "8px",
-        marginBottom: "16px",
-      },
-      totalPrice: {
-        display: "flex",
-        justifyContent: "flex-end",
-        fontWeight: "bold",
-        marginTop: "16px",
-      },
-      receiptButton: {
-        backgroundColor: "#4CAF50",
-        color: "white",
-        border: "none",
-        padding: "8px 16px",
-        borderRadius: "4px",
-        cursor: "pointer",
-        marginTop: "16px",
-      },
-    };
-  
-    return (
-      <div className=" bg-white">
-        <HeaderPage />
-        <motion.div
-          className="overflow-y-auto"
-          style={stylesCart.preorderList}
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 120,
-            damping: 14,
-            ease: "easeInOut",
-          }}
-        >
-          {orderList ? (
-            <div style={stylesCart.orderList}>
-              <div style={stylesCart.orderDetails}>
-                <label onClick={() => console.log(orderList)}>รายการสั่งซื้อ</label>
-                <p>รายการที่ {orderList.idOrder}</p>
-                <p>ผู้สั่ง ชื่อ {orderList.user}</p>
-                <p>ที่อยู่ {orderList.address}</p>
-                <p>วันที่ {orderList.date}</p>
-              </div>
-              <table style={stylesCart.table}>
-                <thead>
-                  <tr>
-                    <th style={stylesCart.th}>ID Product</th>
-                    <th style={stylesCart.th}>Image</th>
-                    <th style={stylesCart.th}>Name</th>
-                    <th style={stylesCart.th}>Size</th>
-                    <th style={stylesCart.th}>Quantity</th>
-                    <th style={stylesCart.th}>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orderList.product.map((data, index) => (
-                    <tr
-                      key={index}
-                      style={
-                        index % 2 === 0
-                          ? { ...stylesCart.evenRow, ...stylesCart.td }
-                          : stylesCart.td
-                      }
-                    >
-                      <td>{data.idProduct}</td>
-                      <td>
-                        <img
-                          src={data.img}
-                          alt={`Product ${data.idProduct}`}
-                          style={stylesCart.image}
-                        />
-                      </td>
-                      <td>name</td>
-                      <td>{data.size}</td>
-                      <td>{data.quantity}</td>
-                      <td>{data.pirece}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div style={stylesCart.totalPrice}>
-                <span>ยอดสุทธิ {orderList.pirece}</span>
-              </div>
-              <div style={stylesCart.totalPrice} onClick={()=>{setOrderList()}}>
-                <span>{orderList.status}</span>
-              </div>
-            </div>
-          ) : (
-            <ListOrder setOrderList={setOrderList} />
-          )}
-        </motion.div>
-      </div>
-    );
-  }
+  const [orderList, setOrderList] = useState();
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://127.0.0.1:8000/ecommerce/");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const jsonData = await response.json();
-      setData(jsonData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+  const stylesCart = {
+    content: {
+      display: "grid",
+      gridTemplateColumns: "1.5fr 6fr",
+      height: "calc(100vh - 80px)",
+      backgroundColor: "#FFFFFF",
+    },
+    listaddress: {
+      padding: "5px",
+    },
+    listproduct: {
+      padding: "5px",
+    },
+    nextButton: {
+      backgroundColor: "#d9d9d9",
+    },
+    preorderList: {
+      height: "calc(100vh - 80px)",
+      backgroundColor: "#FFFFFF",
+      padding: "5px",
+    },
+    orderList: {
+      color: "black",
+      padding: "20px",
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+      fontFamily: "Arial, sans-serif",
+      marginTop: "16px",
+    },
+    th: {
+      padding: "10px",
+      textAlign: "left",
+      borderBottom: "1px solid #ddd",
+      backgroundColor: "#f2f2f2",
+    },
+    td: {
+      padding: "10px",
+      textAlign: "left",
+      borderBottom: "1px solid #ddd",
+    },
+    evenRow: {
+      backgroundColor: "#f2f2f2",
+    },
+    image: {
+      maxWidth: "50px",
+      height: "auto",
+    },
+    orderDetails: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "8px",
+      marginBottom: "16px",
+    },
+    totalPrice: {
+      display: "flex",
+      justifyContent: "flex-end",
+      fontWeight: "bold",
+      marginTop: "16px",
+    },
+    receiptButton: {
+      backgroundColor: "#4CAF50",
+      color: "white",
+      border: "none",
+      padding: "8px 16px",
+      borderRadius: "4px",
+      cursor: "pointer",
+      marginTop: "16px",
+    },
   };
 
+  return (
+    <div className=" bg-white">
+      <HeaderPage />
+      <motion.div
+        className="overflow-y-auto"
+        style={stylesCart.preorderList}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 14,
+          ease: "easeInOut",
+        }}
+      >
+        {orderList ? (
+          <div style={stylesCart.orderList}>
+            <div style={stylesCart.orderDetails}>
+              <label onClick={() => console.log(orderList)}>
+                รายการสั่งซื้อ
+              </label>
+              <p>รายการที่ {orderList.idOrder}</p>
+              <p>ผู้สั่ง ชื่อ {orderList.user}</p>
+              <p>ที่อยู่ {orderList.address}</p>
+              <p>วันที่ {orderList.date}</p>
+            </div>
+            <table style={stylesCart.table}>
+              <thead>
+                <tr>
+                  <th style={stylesCart.th}>ID Product</th>
+                  <th style={stylesCart.th}>Image</th>
+                  <th style={stylesCart.th}>Name</th>
+                  <th style={stylesCart.th}>Size</th>
+                  <th style={stylesCart.th}>Quantity</th>
+                  <th style={stylesCart.th}>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderList.product.map((data, index) => (
+                  <tr
+                    key={index}
+                    style={
+                      index % 2 === 0
+                        ? { ...stylesCart.evenRow, ...stylesCart.td }
+                        : stylesCart.td
+                    }
+                  >
+                    <td>{data.idProduct}</td>
+                    <td>
+                      <img
+                        src={data.img}
+                        alt={`Product ${data.idProduct}`}
+                        style={stylesCart.image}
+                      />
+                    </td>
+                    <td>name</td>
+                    <td>{data.size}</td>
+                    <td>{data.quantity}</td>
+                    <td>{data.pirece}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div style={stylesCart.totalPrice}>
+              <span>ยอดสุทธิ {orderList.pirece}</span>
+            </div>
+            <div
+              style={stylesCart.totalPrice}
+              onClick={() => {
+                setOrderList();
+              }}
+            >
+              <span>{orderList.status}</span>
+            </div>
+          </div>
+        ) : (
+          <ListOrder setOrderList={setOrderList} />
+        )}
+      </motion.div>
+    </div>
+  );
+}
+
+const fetchData = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/ecommerce/");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const jsonData = await response.json();
+    setData(jsonData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
