@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from .models import Product
-#เบนนี่ทำต่อvvv
 from .models import Customer
 from .models import Payment
 from .models import Shipping
 from .models import Order
+from django.test import TestCase
+from .serializers import *
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -16,9 +17,6 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
     
-    
-#เบนนี่ทำต่อvvv   
-
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
@@ -54,3 +52,21 @@ class OrderSerializer(serializers.ModelSerializer):
         instance = self.Meta.model(**validated_data)
         instance.save()
         return instance
+
+class ProductSerializerTestCase(TestCase):
+    def setUp(self):
+        self.product_data = {'name': 'Test Product', 'price': 100}
+        self.serializer = ProductSerializer(data=self.product_data)
+
+    def test_create_valid_data(self):
+        self.assertTrue(self.serializer.is_valid())
+        self.serializer.save()
+        self.assertEqual(Product.objects.count(), 1)
+        product = Product.objects.get()
+        self.assertEqual(product.name, 'Test Product')
+        self.assertEqual(product.price, 100)
+
+    def test_create_invalid_data(self):
+        invalid_data = {'name': 'Test Product'}
+        serializer = ProductSerializer(data=invalid_data)
+        self.assertFalse(serializer.is_valid())

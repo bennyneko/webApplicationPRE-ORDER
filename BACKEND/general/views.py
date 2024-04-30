@@ -6,7 +6,8 @@ from general.serializers import ProductSerializer
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from .models import Customer
+from .serializers import CustomerSerializer
 
 # # Create your views here.
 # @csrf_exempt
@@ -108,7 +109,57 @@ class ProductSearchAPIView(APIView):
         if max_price:
             products = products.filter(price__lte=max_price)
 
-        # Serialize ข้อมูลสินค้าที่เหลือ
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+class CustomerAPIView(APIView):
+    def post(self, request):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        customers = Customer.objects.all()
+        serializer = CustomerSerializer(customers, many=True)
+        return Response(serializer.data)
+
+class OrderAPIView(APIView):
+    def post(self, request):
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        orders = Order.objects.all()
+        serializer = OrderSerializer(orders, many=True)
+        return Response(serializer.data)
+    
+class PaymentAPIView(APIView):
+    def post(self, request):
+        serializer = PaymentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        payments = Payment.objects.all()
+        serializer = PaymentSerializer(payments, many=True)
+        return Response(serializer.data)
+    
+class ShippingAPIView(APIView):
+    def post(self, request):
+        serializer = ShippingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        shippings = Shipping.objects.all()
+        serializer = ShippingSerializer(shippings, many=True)
+        return Response(serializer.data)
