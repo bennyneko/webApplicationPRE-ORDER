@@ -22,6 +22,8 @@ export default function ListItem(props) {
 
   useEffect(() => {
     setProducts(data);
+    console.log("This is inside list Item");
+    console.log(data);
   }, [data]);
 
   return (
@@ -31,12 +33,12 @@ export default function ListItem(props) {
           <div
             key={index}
             className=" p-2 rounded-lg shadow-md cursor-pointer justify-between"
-            onClick={() => openModaled(item.id)}
+            onClick={() => openModaled(item.sku)}
             style={{ display: "flex", flexDirection: "column" }} // Removed unnecessary justification
           >
             <div className="w-full aspect-square overflow-hidden rounded-lg mb-4">
               <img
-                src={item.img}
+                src={item.image}
                 alt={item.name}
                 className="w-full h-full object-contain"
               />
