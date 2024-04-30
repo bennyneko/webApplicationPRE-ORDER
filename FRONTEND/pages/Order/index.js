@@ -5,6 +5,7 @@ import { getAllProducts, getProductById } from "../datatest/data";
 import { getListCartAll, addProductToCart } from "../datatest/listcart";
 import { getOrderAll } from "../datatest/order";
 import Router from "next/router";
+import React, { useEffect, useState } from "react";
 
 const HeaderPage = () => {
   const stylesHeaderPage = {
@@ -260,3 +261,4 @@ export default function Order() {
       console.error("Error fetching data:", error);
     }
   };
+

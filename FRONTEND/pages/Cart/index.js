@@ -6,6 +6,7 @@ import { getListCartAll, addProductToCart } from "../datatest/listcart";
 import { getAddress } from "../datatest/address";
 import Router from "next/router";
 
+
 const HeaderPage = (props) => {
   const stylesHeaderPage = {
     header: {
@@ -428,3 +429,45 @@ export default function Cart() {
     </div>
   );
 }
+
+const loadDataProduct = () => {
+  fetch('/api/cart/view/')  // เรียกใช้ REST API endpoint ของ Django backend
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          setDataProductCart(data); // ตั้งค่า state เพื่อแสดงข้อมูลสินค้าในตะกร้า
+      })
+      .catch(error => {
+          console.error('Error fetching cart items:', error);
+      });
+};
+
+useEffect(() => {
+  loadDataProduct(); // เรียกใช้ฟังก์ชัน loadDataProduct เมื่อ component ถูกโหลด
+}, []);
+
+const handleSubmit = () => {
+  fetch('/api/cart/checkout/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ selectedProducts }), // ส่งข้อมูลที่เลือกไปยัง Django backend
+  })
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+      
+  })
+  .catch(error => {
+      console.error('Error sending selected products:', error);
+  });
+};
